@@ -60,7 +60,7 @@ End FinSet.
 Module FinSetFacts (M : FinSet).
 
 Import M.
-Open Local Scope set_scope.
+Local Open Scope set_scope.
 
 (** Interaction of in with constructions *)
 
@@ -76,7 +76,7 @@ Qed.
 Lemma in_singleton : forall x y,
   x \in {{y}} <-> x = y.
 Proof.
-  intros; split.
+  intros; split*.
   intro H. symmetry. apply S.singleton_1. trivial.
   intro H. apply S.singleton_2. unfold S.E.eq. auto.
 Qed.
@@ -84,7 +84,7 @@ Qed.
 Lemma in_union : forall x E F,
   x \in (E \u F) <-> (x \in E) \/ (x \in F).
 Proof.
-  intros; split.
+  intros; split*.
   auto using S.union_1.
   intro H; destruct H as [ H | H ]; auto using S.union_2, S.union_3.
 Qed.
@@ -95,28 +95,28 @@ Lemma union_same : forall E,
   E \u E = E.
 Proof.
   intros. apply eq_if_Equal.
-  split; repeat rewrite in_union; intuition.
+  split*; repeat rewrite in_union; intuition.
 Qed.
 
 Lemma union_comm : forall E F,
   E \u F = F \u E.
 Proof.
   intros. apply eq_if_Equal.
-  split; repeat rewrite in_union; intuition.
+  split*; repeat rewrite in_union; intuition.
 Qed.
 
 Lemma union_assoc : forall E F G,
   E \u (F \u G) = (E \u F) \u G.
 Proof.
   intros. apply eq_if_Equal.
-  split; repeat rewrite in_union; intuition.
+  split*; repeat rewrite in_union; intuition.
 Qed.
 
 Lemma union_empty_l : forall E,
   {} \u E = E.
 Proof.
   intros. apply eq_if_Equal.
-  split; repeat rewrite in_union; intuition.
+  split*; repeat rewrite in_union; intuition.
   contradictions. apply* in_empty.
 Qed.
 
@@ -163,7 +163,7 @@ Qed.
 
 Lemma subset_singleton : forall x E,
   x \in E <-> {{x}} << E.
-unfold S.Subset. split; intros.
+unfold S.Subset. split*; intros.
 rewrite in_singleton in H0. subst*.
 apply (H x). apply in_same.
 Qed.
@@ -195,7 +195,7 @@ Qed.
 
 Lemma notin_singleton : forall x y,
   x \notin {{y}} <-> x <> y.
-split; introz.
+split*; introz.
 apply H. rewrite* in_singleton.
 apply H. rewrite* <- in_singleton.
 Qed.
