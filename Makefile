@@ -8,7 +8,7 @@
 #
 ############################################################################
 
-COQC = coqc
+COQC = coqc -I .
 COQDEP = coqdep
 COQDOC = coqdoc --quiet --utf8 --html
 BEAUTICOQ = php ../tools/beauticoq.php
@@ -103,7 +103,7 @@ beauticoq :
 clean_all : clear clean_doc
 
 clean :
-	rm -f *.vo .depend *.deps *.dot .*.aux *.glob
+	rm -f *.vo .depend *.deps *.dot
 
 clean_doc :
 	rm -f doc_light/* src_color/*
@@ -112,7 +112,7 @@ clean_doc :
 	$(COQC) $<
 
 .depend : $(VFILES)
-	$(COQDEP) -I . -R . "" $(VFILES) > .depend
+	$(COQDEP) -I . $(VFILES) > .depend
 
 include .depend
 
